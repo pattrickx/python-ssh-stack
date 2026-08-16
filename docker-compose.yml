@@ -6,3 +6,16 @@ services:
     restart: unless-stopped
     ports:
       - "2222:22"
+    # GPU passthrough (host roda nvidia-container-toolkit; runtime default = nvidia)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # FLUX precisa de bastante shared memory
+    shm_size: "8gb"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
