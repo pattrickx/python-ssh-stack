@@ -1,6 +1,5 @@
 services:
   python-ssh:
-    build: .
     image: python-ssh:latest
     container_name: python-ssh
     hostname: python-ssh

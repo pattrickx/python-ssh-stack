@@ -16,8 +16,8 @@ ssh -p 2222 root@<IP_DO_HOST>
 
 ## Arquivos
 
-- `docker-compose.yml` — definição do serviço
-- `Dockerfile` — imagem com Python + SSH
+- `docker-compose.yml` — definição do serviço (usa a imagem `python-ssh:latest` já buildada no host; sem `build:` pra evitar build no deploy do Portainer)
+- `Dockerfile` — imagem com Python + SSH (build manual no host: `docker build -t python-ssh:latest .`)
 
 ## Deploy no Portainer
 
