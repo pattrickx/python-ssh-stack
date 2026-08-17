@@ -1,8 +1,8 @@
 # === FLUX.1-dev / FLUX.1-Kontext-dev (PyTorch + diffusers) ===
-# Versões testadas em Linux x86_64 + NVIDIA RTX 3060 (CUDA 12.x, driver 570)
-torch==2.5.1
-torchvision==0.20.1
---extra-index-url https://download.pytorch.org/whl/cu124
+# torch 2.7.1+ suporta fp8 (Float8_e4m3fn) -> cabe em 12GB VRAM (RTX 3060)
+torch==2.7.1
+torchvision==0.22.1
+--extra-index-url https://download.pytorch.org/whl/cu128
 
 diffusers==0.33.1
 transformers==4.49.0

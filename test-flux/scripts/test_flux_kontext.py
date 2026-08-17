@@ -2,8 +2,8 @@ import os, sys
 from dotenv import load_dotenv
 load_dotenv()
 
-from diffusers import FluxKontextPipeline
 import torch
+from diffusers import FluxKontextPipeline
 from PIL import Image
 
 HF_TOKEN = os.environ.get("HF_TOKEN", "")
@@ -14,19 +14,29 @@ STEPS = int(os.environ.get("NUM_INFERENCE_STEPS", "28"))
 SEED = int(os.environ.get("SEED", "42"))
 
 if len(sys.argv) < 3:
-    print("Uso: python scripts/test_flux_kontext.py <caminho_imagem_entrada> <prompt_edicao>")
+    print("Uso: python scripts/test_flux_kontext.py <imagem_entrada> <prompt_edicao>")
     sys.exit(1)
-
 IMG_PATH = sys.argv[1]
 PROMPT = sys.argv[2]
 
-torch_dtype = torch.float8_e4m3fn if PREC == "fp8" else (torch.bfloat16 if PREC == "bf16" else torch.float16)
+if PREC == "fp8":
+    try:
+        torch_dtype = torch.float8_e4m3fn
+    except AttributeError:
+        torch_dtype = torch.bfloat16
+elif PREC == "bf16":
+    torch_dtype = torch.bfloat16
+else:
+    torch_dtype = torch.float16
+
 print(f"[kontext] loading {REPO} (dtype={torch_dtype}) ...")
 pipe = FluxKontextPipeline.from_pretrained(
     REPO,
     token=HF_TOKEN or None,
     torch_dtype=torch_dtype,
 ).to("cuda")
+if PREC != "fp8":
+    pipe.enable_model_cpu_offload()
 
 init = Image.open(IMG_PATH).convert("RGB")
 print(f"[kontext] edit: {PROMPT}")
