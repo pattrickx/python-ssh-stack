@@ -1,0 +1,18 @@
+# === FLUX.1-dev / FLUX.1-Kontext-dev (PyTorch + diffusers) ===
+# Versões testadas em Linux x86_64 + NVIDIA RTX 3060 (CUDA 12.x, driver 570)
+torch==2.5.1
+torchvision==0.20.1
+--extra-index-url https://download.pytorch.org/whl/cu124
+
+diffusers==0.33.1
+transformers==4.49.0
+accelerate==1.6.0
+safetensors==0.5.3
+huggingface-hub==0.30.2
+tokenizers==0.21.1
+
+# Utilidades
+numpy==1.26.4
+Pillow==11.1.0
+python-dotenv==1.0.1
+requests==2.32.3

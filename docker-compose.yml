@@ -19,3 +19,6 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      # Cache LOCAL dos pesos do FLUX (roda 100% local, sem API HF)
+      - HF_HOME=/root/test-flux/models
+      - HF_HUB_CACHE=/root/test-flux/models/hub
